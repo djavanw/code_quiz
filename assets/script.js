@@ -3,7 +3,7 @@ var highScoreEl = document.querySelector('#hiScore');
 var scoreEl = document.querySelector('#score');
 var timerEl = document.querySelector('#timer');
 var questionEl = document.querySelector('#question');
-var answersEl = document.querySelector('.answers');
+var answersEl = document.querySelectorAll('.answers');
 
 var answerOne = document.querySelector('#answ1');
 var answerTwo = document.querySelector('#answ2');
@@ -12,7 +12,7 @@ var answerFour = document.querySelector('#answ4');
 var correctEl = document.querySelector('#correct');
 
 let playTime = 75;
-
+var score = 0;
 var questAnsw = [
     {
         0: 'Here is question number one(1)?',
@@ -20,7 +20,7 @@ var questAnsw = [
         2: 'Answer B to question1',
         3: 'Answer C to question1',
         4: 'Answer D to question1',
-        5: 'c'
+        5: 'Answer C to question1'
     },
 
     {
@@ -29,7 +29,7 @@ var questAnsw = [
         2: 'Answer B to question2',
         3: 'Answer C to question2',
         4: 'Answer D to question2',
-        5: 'd'
+        5: 'Answer D to question2'
     },
 
     {
@@ -38,7 +38,7 @@ var questAnsw = [
         2: 'Answer B to question3',
         3: 'Answer C to question3',
         4: 'Answer D to question3',
-        5: 'a'
+        5: 'Answer A to question3'
     },
 
     {
@@ -47,7 +47,7 @@ var questAnsw = [
         2: 'Answer B to question4',
         3: 'Answer C to question4',
         4: 'Answer D to question4',
-        5: 'b'
+        5: 'Answer B to question4'
     },
 
     {
@@ -56,7 +56,7 @@ var questAnsw = [
         2: 'Answer B to question5',
         3: 'Answer C to question5',
         4: 'Answer D to question5',
-        5: 'c'
+        5: 'Answer C to question5'
     }
 ];
 
@@ -81,7 +81,7 @@ function genQuestion() {
             console.log(questAnsw[j][i])
                
         } else if(i === 1) {
-            answerOne.innerHTML = questAnsw[j][i];
+            answerOne.textContent = questAnsw[j][i];
             console.log(questAnsw[j][i])
 
         } else if(i === 2) {
@@ -98,10 +98,11 @@ function genQuestion() {
 
         } else {console.log('iteration finished')}
        
-    answerOne.addEventListener('click', transitionEl); 
-    answerTwo.addEventListener('click', transitionEl);
-    answerThree.addEventListener('click', transitionEl);
-    answerFour.addEventListener('click', transitionEl);
+        
+        answerOne.addEventListener('click', checkAnswer); 
+        answerTwo.addEventListener('click', checkAnswer);
+        answerThree.addEventListener('click', checkAnswer);
+        answerFour.addEventListener('click', checkAnswer);
 
     console.log('Loop finished ' + i);
     
@@ -110,15 +111,12 @@ function genQuestion() {
 }
 
 function additionEl(){
-    console.log('You are in a new function');
+    console.log('You are in the additionEl function');
     // console.log(event.type);
     // console.log(event.target);
     j = j + 1;
     currentQuestion++;
     
-    //transitionEl();
-    
-
     //if(event.target === questAnsw[j][3])
     console.log('You are finished');
     genQuestion();
@@ -126,31 +124,55 @@ function additionEl(){
 
 
 
-function transitionEl() {
+function checkAnswer(event) {
+    console.log('You are in the checkAnswer function');
+    console.log(event.target);
+    console.log('This was selected ' + questAnsw[j][i]);
+    if(questAnsw[j][i] === questAnsw[0][3] || 
+        questAnsw[j][i] === questAnsw[1][4] || 
+        questAnsw[j][i] === questAnsw[2][1] || 
+        questAnsw[j][i] === questAnsw[3][2] || 
+        questAnsw[j][i] === questAnsw[4][3])
+    {
+        score++
+        scoreEl.innerHTML = score; 
+        console.log('This is the Correct Answer');
+
+    } else { 
+        console.log('These Answers are Wrong')        
+        }
+    
+    transitionEl();
+}
+
+
+function transitionEl(event) {
+        
+        
     let transitionTime = 3;
     console.log('Made it to the Question transition timer')
     var timerInterval = setInterval(function(){
         transitionTime--;
-
+        
         questionEl.textContent = ' ';
-        answerOne.innerHTML = ' ';
-        answerTwo.innerHTML = ' ';
-        answerThree.innerHTML = ' ';
-        answerFour.innerHTML = ' ';
+        answerOne.textContent = ' ';
+        answerTwo.textContent = ' ';
+        answerThree.textContent = ' ';
+        answerFour.textContent = ' ';
 
         if(transitionTime === 0) {
             clearInterval(timerInterval);
-            
             questionEl.textContent = questAnsw[j][i];
-            answerOne.innerHTML = questAnsw[j][i];
-            answerTwo.innerHTML = questAnsw[j][i];
-            answerThree.innerHTML = questAnsw[j][i];
-            answerFour.innerHTML = questAnsw[j][i];
-
+            answerOne.textContent = questAnsw[j][i];
+            answerTwo.textContent = questAnsw[j][i];
+            answerThree.textContent =questAnsw[j][i];
+            answerFour.textContent = questAnsw[j][i];
+        
             additionEl();
         }
     }, 1000);
 }
+
 
 function timerGame(event) {
     
