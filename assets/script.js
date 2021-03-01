@@ -2,6 +2,7 @@ var startEl = document.querySelector('#start');
 var highScoreEl = document.querySelector('#hiScore');
 var scoreEl = document.querySelector('#score');
 var timerEl = document.querySelector('#timer');
+var startmsgEl = document.querySelector('#startmsg');
 var questionEl = document.querySelector('#question');
 var answersEl = document.querySelectorAll('.answers');
 
@@ -70,7 +71,7 @@ let currentQuestion = j;
 
 function genQuestion() {
    console.log('CurrentQuestion: ' + (currentQuestion +1))
-        
+   correctEl.innerHTML = ' ';                               //This will hide the answer message before going to next question.
         //questionEl.textContent = questAnsw[j][i];
         //answerOne.innerHTML = questAnsw[j][i];
     
@@ -124,37 +125,36 @@ function additionEl(){
 
 
 
+
 function checkAnswer(event) {
     console.log('You are in the checkAnswer function');
-    console.log(event.target);
-    console.log('This was selected ' + questAnsw[j][i]);
-    if(questAnsw[j][i] === questAnsw[0][3] || 
-        questAnsw[j][i] === questAnsw[1][4] || 
-        questAnsw[j][i] === questAnsw[2][1] || 
-        questAnsw[j][i] === questAnsw[3][2] || 
-        questAnsw[j][i] === questAnsw[4][3])
+    console.log(event.target.innerText);
+    console.log('This was selected: ' + questAnsw[j][i]);
+    if(event.target.innerText === questAnsw[0][3] ||   //Checks the click event to match the correct answers of the array/object. #5 holds correct answers.
+        event.target.innerText === questAnsw[1][4] || 
+        event.target.innerText === questAnsw[2][1] || 
+        event.target.innerText === questAnsw[3][2] || 
+        event.target.innerText === questAnsw[4][3])
     {
         score++
         scoreEl.innerHTML = score; 
         console.log('This is the Correct Answer');
-
+        correctEl.innerHTML = 'Correct Answer';
     } else { 
-        console.log('These Answers are Wrong')        
+        console.log('The Answers is Wrong');
+        correctEl.innerHTML = 'Wrong Answer';     
         }
-    
     transitionEl();
 }
 
-
 function transitionEl(event) {
-        
+  
         
     let transitionTime = 3;
     console.log('Made it to the Question transition timer')
     var timerInterval = setInterval(function(){
         transitionTime--;
-        
-        questionEl.textContent = ' ';
+        questionEl.textContent = ' ';                    //The following will briefly hide the questions and answers before going to the next question.
         answerOne.textContent = ' ';
         answerTwo.textContent = ' ';
         answerThree.textContent = ' ';
@@ -162,19 +162,19 @@ function transitionEl(event) {
 
         if(transitionTime === 0) {
             clearInterval(timerInterval);
-            questionEl.textContent = questAnsw[j][i];
+            questionEl.textContent = questAnsw[j][i];    //This must be unhiden before looping back to the genQuestion function or there will be variable contents and cause errors.
             answerOne.textContent = questAnsw[j][i];
             answerTwo.textContent = questAnsw[j][i];
             answerThree.textContent =questAnsw[j][i];
             answerFour.textContent = questAnsw[j][i];
-        
+            //correctEl.innerHTML = ' ';                  //This will hide the answer message before going to next question.
             additionEl();
         }
     }, 1000);
 }
 
 
-function timerGame(event) {
+function timerGame(event) {                              //This is the main quiz time and start at first click.
     
     console.log('This timer is going');
     console.log(event);
@@ -190,8 +190,8 @@ function timerGame(event) {
 
 
 
-startEl.addEventListener('click', genQuestion);  //This starts the application  
-startEl.addEventListener('click', timerGame);
+startEl.addEventListener('click', genQuestion);  //This starts the quiz.  
+startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
 
 
 
