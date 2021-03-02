@@ -12,7 +12,7 @@
     grid-template-rows: repeat(15, 70px);
 }
 
-.answers {
+.responses {
     background-color: cornflowerblue;
     /* grid-column: 4;
     grid-row: 5 / span 3; */

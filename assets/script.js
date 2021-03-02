@@ -4,7 +4,7 @@ var scoreEl = document.querySelector('#score');
 var timerEl = document.querySelector('#timer');
 var startmsgEl = document.querySelector('#startmsg');
 var questionEl = document.querySelector('#question');
-var answersEl = document.querySelectorAll('.answers');
+var responsesEltwo = document.querySelectorAll('.responses');
 
 var answerOne = document.querySelector('#answ1');
 var answerTwo = document.querySelector('#answ2');
@@ -16,48 +16,48 @@ let playTime = 75;
 var score = 0;
 var questAnsw = [
     {
-        0: 'Here is question number one(1)?',
-        1: 'Answer A to question1',
-        2: 'Answer B to question1',
-        3: 'Answer C to question1',
-        4: 'Answer D to question1',
-        5: 'Answer C to question1'
+        0: '1. Which method below is not associated with arrays?',
+        1: 'a. sort()',
+        2: 'b. reverse()',
+        3: 'c. href()',
+        4: 'd. pop()',
+        5: 'c. href()'
     },
 
     {
-        0: 'Here is question number two(2)?',
-        1: 'Answer A to question2',
-        2: 'Answer B to question2',
-        3: 'Answer C to question2',
-        4: 'Answer D to question2',
-        5: 'Answer D to question2'
+        0: '2. Which is not considered a loop in JavaScript?',
+        1: 'a. for',
+        2: 'b. while',
+        3: 'c. for/in',
+        4: 'd. do/wilt',
+        5: 'd. do/wilt'
     },
 
     {
-        0: 'Here is question number three(3)?',
-        1: 'Answer A to question3',
-        2: 'Answer B to question3',
-        3: 'Answer C to question3',
-        4: 'Answer D to question3',
-        5: 'Answer A to question3'
+        0: '3. What does a break statement do?',
+        1: 'a. jumps out of the loop',
+        2: 'b. continues the iteration',
+        3: 'c. gives the option to continue the loop',
+        4: 'd. completes only three iterations',
+        5: 'a. jumps out of the loop'
     },
 
     {
-        0: 'Here is question number four(4)?',
-        1: 'Answer A to question4',
-        2: 'Answer B to question4',
-        3: 'Answer C to question4',
-        4: 'Answer D to question4',
-        5: 'Answer B to question4'
+        0: '4. JavaScript statements do not contain which of the following?',
+        1: 'a. expressions',
+        2: 'b. boolean decimals',
+        3: 'c. values',
+        4: 'd. characters',
+        5: 'b. boolean decimals'
     },
 
     {
-        0: 'Here is question number five(5)?',
-        1: 'Answer A to question5',
-        2: 'Answer B to question5',
-        3: 'Answer C to question5',
-        4: 'Answer D to question5',
-        5: 'Answer C to question5'
+        0: '5. What keyword can be used to create a variable?',
+        1: 'a. mkdir',
+        2: 'b. git',
+        3: 'c. var',
+        4: 'd. apt-get',
+        5: 'c. var'
     }
 ];
 
@@ -68,10 +68,9 @@ let currentQuestion = j;
 //while(j < questAnsw.length)
 //for(j = 0; j < questAnsw.length; i++)
 
-
 function genQuestion() {
    console.log('CurrentQuestion: ' + (currentQuestion +1))
-   correctEl.innerHTML = ' ';                               //This will hide the answer message before going to next question.
+   correctEl.style.visibility = 'hidden';                               //This will hide the answer message before going to next question.
         //questionEl.textContent = questAnsw[j][i];
         //answerOne.innerHTML = questAnsw[j][i];
     
@@ -135,14 +134,18 @@ function checkAnswer(event) {
         event.target.innerText === questAnsw[2][1] || 
         event.target.innerText === questAnsw[3][2] || 
         event.target.innerText === questAnsw[4][3])
+         
     {
         score++
         scoreEl.innerHTML = score; 
         console.log('This is the Correct Answer');
         correctEl.innerHTML = 'Correct Answer';
+        correctEl.style.visibility = 'visible';
     } else { 
         console.log('The Answers is Wrong');
-        correctEl.innerHTML = 'Wrong Answer';     
+        correctEl.innerHTML = 'Wrong Answer';
+        correctEl.style.visibility = 'visible';
+        playTime-=10     
         }
     transitionEl();
 }
@@ -154,20 +157,34 @@ function transitionEl(event) {
     console.log('Made it to the Question transition timer')
     var timerInterval = setInterval(function(){
         transitionTime--;
-        questionEl.textContent = ' ';                    //The following will briefly hide the questions and answers before going to the next question.
-        answerOne.textContent = ' ';
-        answerTwo.textContent = ' ';
-        answerThree.textContent = ' ';
-        answerFour.textContent = ' ';
+        //correctEl.style.visibility = 'visible';
+        questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
+        answerOne.style.visibility = 'hidden';
+        answerTwo.style.visibility = 'hidden';
+        answerThree.style.visibility = 'hidden';
+        answerFour.style.visibility = 'hidden';
+                   
+        // questionEl.textContent = ' ';                    //The following will briefly hide the questions and answers before going to the next question.
+        // answerOne.textContent = ' ';
+        // answerTwo.textContent = ' ';
+        // answerThree.textContent = ' ';
+        // answerFour.textContent = ' ';
 
         if(transitionTime === 0) {
             clearInterval(timerInterval);
-            questionEl.textContent = questAnsw[j][i];    //This must be unhiden before looping back to the genQuestion function or there will be variable contents and cause errors.
-            answerOne.textContent = questAnsw[j][i];
-            answerTwo.textContent = questAnsw[j][i];
-            answerThree.textContent =questAnsw[j][i];
-            answerFour.textContent = questAnsw[j][i];
+            questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
+            answerOne.style.visibility = 'visible';
+            answerTwo.style.visibility = 'visible';
+            answerThree.style.visibility = 'visible';
+            answerFour.style.visibility = 'visible';
+            correctEl.style.visibility = 'hidden';
+            // questionEl.textContent = questAnsw[j][i];    //This must be unhiden before looping back to the genQuestion function or there will be variable contents and cause errors.
+            // answerOne.textContent = questAnsw[j][i];
+            // answerTwo.textContent = questAnsw[j][i];
+            // answerThree.textContent =questAnsw[j][i];
+            // answerFour.textContent = questAnsw[j][i];
             //correctEl.innerHTML = ' ';                  //This will hide the answer message before going to next question.
+            
             additionEl();
         }
     }, 1000);
@@ -180,7 +197,7 @@ function timerGame(event) {                              //This is the main quiz
     console.log(event);
     var timerInterval = setInterval(function(){
         playTime--;
-        timerEl.innerHTML = playTime;
+        timerEl.innerHTML = 'Time: ' + playTime;
         if(playTime === 0) {
             clearInterval(timerInterval);
             timerEl.innerHTML = 'Time is Up'
