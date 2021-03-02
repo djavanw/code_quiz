@@ -12,6 +12,11 @@
     grid-template-rows: repeat(15, 70px);
 }
 
+#score, #startmsg, #startheader, #timer, #score, #hiScore {
+    text-align: center;
+}
+
+
 .responses {
     background-color: cornflowerblue;
     /* grid-column: 4;
@@ -19,7 +24,15 @@
 }
 
 #startmsg {
-    grid-column: 4;
+    background-color: aqua;
+    text-align: center;
+    grid-column: 3 / span 3;
+    grid-row: 4;
+}
+
+#startheader {
+    font-size: 30px;
+    grid-column: 3 / span 3;
     grid-row: 3;
 }
 
@@ -81,5 +94,5 @@
 
 #start {
     grid-column: 4;
-    grid-row: 9;
+    grid-row: 7;
 }

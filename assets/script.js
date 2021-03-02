@@ -1,16 +1,26 @@
+var preGameMsg = 'Try to answer the following JavaScript coding related questions within the given time limit. Incorrect answers will deduct 10 seconds from the overall time.  Good Luck!!!'
+var gameTitle = 'Coding Quiz Challenge';
 var startEl = document.querySelector('#start');
 var highScoreEl = document.querySelector('#hiScore');
 var scoreEl = document.querySelector('#score');
 var timerEl = document.querySelector('#timer');
+var startHeaderEl = document.querySelector('#startheader');
 var startmsgEl = document.querySelector('#startmsg');
+var initialsEl = document.querySelector('#initials');
+
 var questionEl = document.querySelector('#question');
-var responsesEltwo = document.querySelectorAll('.responses');
 
 var answerOne = document.querySelector('#answ1');
 var answerTwo = document.querySelector('#answ2');
 var answerThree = document.querySelector('#answ3');
 var answerFour = document.querySelector('#answ4');
 var correctEl = document.querySelector('#correct');
+
+
+
+
+//var responsesEltwo = document.querySelectorAll('.responses');
+
 
 let playTime = 75;
 var score = 0;
@@ -70,9 +80,10 @@ let currentQuestion = j;
 
 function genQuestion() {
    console.log('CurrentQuestion: ' + (currentQuestion +1))
-   correctEl.style.visibility = 'hidden';                               //This will hide the answer message before going to next question.
-        //questionEl.textContent = questAnsw[j][i];
-        //answerOne.innerHTML = questAnsw[j][i];
+   //correctEl.style.visibility = 'hidden';                               //This will hide the answer message before going to next question.
+   scoreEl.innerHTML ='Score: ' + score;
+   //questionEl.textContent = questAnsw[j][i];
+   //answerOne.innerHTML = questAnsw[j][i];
     
     for(i = 0; i < questAnsw.length; i++)
     {
@@ -122,9 +133,6 @@ function additionEl(){
     genQuestion();
 };
 
-
-
-
 function checkAnswer(event) {
     console.log('You are in the checkAnswer function');
     console.log(event.target.innerText);
@@ -137,7 +145,7 @@ function checkAnswer(event) {
          
     {
         score++
-        scoreEl.innerHTML = score; 
+        //scoreEl.innerHTML ='Score: ' + score; 
         console.log('This is the Correct Answer');
         correctEl.innerHTML = 'Correct Answer';
         correctEl.style.visibility = 'visible';
@@ -151,8 +159,6 @@ function checkAnswer(event) {
 }
 
 function transitionEl(event) {
-  
-        
     let transitionTime = 3;
     console.log('Made it to the Question transition timer')
     var timerInterval = setInterval(function(){
@@ -172,12 +178,13 @@ function transitionEl(event) {
 
         if(transitionTime === 0) {
             clearInterval(timerInterval);
-            questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
-            answerOne.style.visibility = 'visible';
-            answerTwo.style.visibility = 'visible';
-            answerThree.style.visibility = 'visible';
-            answerFour.style.visibility = 'visible';
-            correctEl.style.visibility = 'hidden';
+            visible();
+            // questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
+            // answerOne.style.visibility = 'visible';
+            // answerTwo.style.visibility = 'visible';
+            // answerThree.style.visibility = 'visible';
+            // answerFour.style.visibility = 'visible';
+            // correctEl.style.visibility = 'hidden';
             // questionEl.textContent = questAnsw[j][i];    //This must be unhiden before looping back to the genQuestion function or there will be variable contents and cause errors.
             // answerOne.textContent = questAnsw[j][i];
             // answerTwo.textContent = questAnsw[j][i];
@@ -192,7 +199,6 @@ function transitionEl(event) {
 
 
 function timerGame(event) {                              //This is the main quiz time and start at first click.
-    
     console.log('This timer is going');
     console.log(event);
     var timerInterval = setInterval(function(){
@@ -205,11 +211,40 @@ function timerGame(event) {                              //This is the main quiz
     }, 1000);
 }
 
+function visible(event) {
+    //clearInterval(timerInterval);
+    startEl.style.visibility = 'hidden';
+    startHeaderEl.style.visibility = 'hidden';
+    startmsgEl.style.visibility = 'hidden';
+    questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
+    answerOne.style.visibility = 'visible';
+    answerTwo.style.visibility = 'visible';
+    answerThree.style.visibility = 'visible';
+    answerFour.style.visibility = 'visible';
+    correctEl.style.visibility = 'hidden';
+    genQuestion();
+
+}
+
+function preGame() {
+    questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
+    answerOne.style.visibility = 'hidden';
+    answerTwo.style.visibility = 'hidden';
+    answerThree.style.visibility = 'hidden';
+    answerFour.style.visibility = 'hidden';
+    correctEl.style.visibility = 'hidden';
+    initialsEl.style.visibility = 'hidden';
+    console.log('You are at preGame Function');
+    startHeaderEl.innerHTML = gameTitle;
+    startmsgEl.innerHTML = preGameMsg;
+    
+    
+    startEl.addEventListener('click', visible);  //This starts the quiz.
+    startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
+}
 
 
-startEl.addEventListener('click', genQuestion);  //This starts the quiz.  
-startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
-
-
+ 
+preGame();
 
     
