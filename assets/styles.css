@@ -122,3 +122,8 @@ label {
     grid-column: 3;
     grid-row: 8;
 }
+
+#clearScores {
+    grid-column: 5;
+    grid-row: 8;
+}
