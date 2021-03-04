@@ -1,5 +1,5 @@
-var gameTitle = 'Coding Quiz Challenge';
 var preGameMsg = 'Try to answer the following JavaScript coding related questions within the given time limit. Incorrect answers will deduct 10 seconds from the overall time.  Good Luck!!!'
+var gameTitle = 'Coding Quiz Challenge';
 var startEl = document.querySelector('#start');
 var highScoreEl = document.querySelector('#hiScore');
 var scoreEl = document.querySelector('#score');
@@ -9,7 +9,6 @@ var startmsgEl = document.querySelector('#startmsg');
 var daFormEl = document.querySelector('#daForm');
 var labelEl = document.querySelector('#label');
 var initialsEl = document.querySelector('#initials');
-var scoreBtnEl = document.querySelector('#scoreBtn');
 
 var questionEl = document.querySelector('#question');
 
@@ -21,8 +20,8 @@ var correctEl = document.querySelector('#correct');
 
 //var responsesEltwo = document.querySelectorAll('.responses');
 
-let scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];                                  //Array for player initials and scores
-let playTime = 75;                                  //Overall amount of time for the quiz
+var scoreRay = [];
+let playTime = 75;
 var score = 0;
 var questAnsw = [
     {
@@ -226,7 +225,6 @@ function timerGame(event) {                              //This is the main quiz
         if(playTime === 0) {
             clearInterval(timerInterval);
             timerEl.innerHTML = 'Time is Up'
-            preGame();
          }
     }, 1000);
 }
@@ -248,50 +246,30 @@ function scrdisplay(event) {
 
 function quizInitials() {
     console.log('You are in the Quiz Initials function');
+    labelEl.style.visibility = 'visible';
+    labelEl.innerHTML = 'Enter your initials below';
+    initialsEl.style.visibility = 'visible';
     correctEl.style.visibility = 'visible';
     correctEl.innerHTML = 'Your final score is ' + score;
-    labelEl.style.visibility = 'visible';
-    labelEl.innerHTML = 'Enter your initials below then click Enter';
-    initialsEl.style.visibility = 'visible';
-    scoreBtnEl.style.visibility = 'visible';
-    
-    scoreBtnEl.addEventListener('click', saveScore);
-        // initialsEl.addEventListener('submit', function(event) {        //Code example for Course activities
-        //     event.preventDefault();                                    //anonmus function within the quizInitials function
+        initialsEl.addEventListener('submit', function(event) {        //Code example for Course activities
+            event.preventDefault();                                    //anonmus function within the quizInitials function
 
-        //     var userInt = initialsEl.value.trim();
-        //     if(userInt ==='') {
-        //         preGame();
-        //     } 
+            var userInt = initialsEl.value.trim();
+            if(userInt ==='') {
+                preGame();
+            } 
 
-        //     scoreRay.push(userInt);
-        //     initialsEl.value = '';
-        //     saveScore();
+            scoreRay.push(userInt);
+            initialsEl.value = '';
+            saveScore();
 
-        // });
+        });
 
 }
 
-function saveScore(event) {
+function saveScore() {
     console.log('You are in the saveScore Function');
-    event.preventDefault();
-    var userInfo = {
-        userInitials: initialsEl.value.trim(),
-        lastScore: score 
-    }
-    // if(userInitials === ' '){
-    //     preGame();
-    // }
-
-    scoreRay.push(userInfo);
-    document.forms[0].reset;
-    //daFormEl.reset();
-    console.log(scoreRay);
-    console.log('Initials pushed');
-    localStorage.setItem('scoreRay', JSON.stringify(scoreRay) );
-    console.log('Placed in localstorage');
-    
-    preGame();    
+    localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
  
 }
 
@@ -306,9 +284,7 @@ function preGame() {
     correctEl.style.visibility = 'hidden';
     initialsEl.style.visibility = 'hidden';
     labelEl.style.visibility = 'hidden';
-    scoreBtnEl.style.visibility = 'hidden';
-    if(playTime > 0 && currentQuestion >= questAnsw.length) {   //This checks to see if the quiz is over (all questions answered)
-        //currentQuestion = 0;
+    if(playTime > 0 && currentQuestion >= questAnsw.length) {
         quizInitials();
     }
     
