@@ -10,9 +10,8 @@ var daFormEl = document.querySelector('#daForm');
 var labelEl = document.querySelector('#label');
 var initialsEl = document.querySelector('#initials');
 var scoreBtnEl = document.querySelector('#scoreBtn');
-
 var questionEl = document.querySelector('#question');
-
+var goBackEl = document.querySelector('#goBack');
 var answerOne = document.querySelector('#answ1');
 var answerTwo = document.querySelector('#answ2');
 var answerThree = document.querySelector('#answ3');
@@ -21,9 +20,10 @@ var correctEl = document.querySelector('#correct');
 
 //var responsesEltwo = document.querySelectorAll('.responses');
 
-let scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];                                  //Array for player initials and scores
-let playTime = 75;                                  //Overall amount of time for the quiz
+var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores
+var playTime = 15;                                  //Overall amount of time for the quiz
 var score = 0;
+
 var questAnsw = [
     {
         0: '1. Which method below is not associated with arrays?',
@@ -223,7 +223,7 @@ function timerGame(event) {                              //This is the main quiz
             preGame();
         }
 
-        if(playTime === 0) {
+        if(playTime === 0 || currentQuestion >= questAnsw.length) {
             clearInterval(timerInterval);
             timerEl.innerHTML = 'Time is Up'
             preGame();
@@ -233,6 +233,7 @@ function timerGame(event) {                              //This is the main quiz
 
 function scrdisplay(event) {
     //clearInterval(timerInterval);
+    console.log('You are in scrdisplay function')
     startEl.style.visibility = 'hidden';
     startHeaderEl.style.visibility = 'hidden';
     startmsgEl.style.visibility = 'hidden';
@@ -255,6 +256,9 @@ function quizInitials() {
     initialsEl.style.visibility = 'visible';
     scoreBtnEl.style.visibility = 'visible';
     
+    
+    //currentQuestion = 0;
+
     scoreBtnEl.addEventListener('click', saveScore);
         // initialsEl.addEventListener('submit', function(event) {        //Code example for Course activities
         //     event.preventDefault();                                    //anonmus function within the quizInitials function
@@ -277,27 +281,39 @@ function saveScore(event) {
     event.preventDefault();
     var userInfo = {
         userInitials: initialsEl.value.trim(),
-        lastScore: score 
+        quizScore: score 
     }
-    // if(userInitials === ' '){
-    //     preGame();
-    // }
+
+    if(userInfo.userInitials === '' || userInfo.userInitials === null) {
+        console.log('You must enter some initials');
+        labelEl.style.color = 'red';
+        labelEl.innerHTML = 'You must enter your initials';
+        return;
+    } 
 
     scoreRay.push(userInfo);
-    document.forms[0].reset;
+    //document.forms[0].reset;
+    labelEl.style.visibility = 'hidden';                //visibility would not work
+    initialsEl.style.visibility = 'hidden';
+    scoreBtnEl.style.visibility = 'hidden';
+    correctEl.style.visibility = 'hidden';
     //daFormEl.reset();
     console.log(scoreRay);
     console.log('Initials pushed');
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay) );
     console.log('Placed in localstorage');
     
-    preGame();    
- 
-}
+    //goBackEl.style.visibility = 'visible';
+    //goBackEl.addEventListener('click',preGame);
 
+    //preGame(); 
+    lastThing();   
+ }
 
 
 function preGame() {
+    
+    goBackEl.style.visibility = 'hidden';
     questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
     answerOne.style.visibility = 'hidden';
     answerTwo.style.visibility = 'hidden';
@@ -307,10 +323,15 @@ function preGame() {
     initialsEl.style.visibility = 'hidden';
     labelEl.style.visibility = 'hidden';
     scoreBtnEl.style.visibility = 'hidden';
+    goBackEl.style.visibility = 'hidden';
     if(playTime > 0 && currentQuestion >= questAnsw.length) {   //This checks to see if the quiz is over (all questions answered)
         //currentQuestion = 0;
         quizInitials();
+     }    
+    if(playTime === 0 || currentQuestion >= questAnsw.length) {
+        quizInitials();
     }
+   
     
     console.log('You are at preGame Function');
     startHeaderEl.innerHTML = gameTitle;
@@ -319,7 +340,47 @@ function preGame() {
     
     startEl.addEventListener('click', scrdisplay);  //This starts the quiz.
     startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
+
 }
+
+
+function lastThing() {
+    console.log('you are at lastThing function')
+    goBackEl.style.visibility = 'visible';
+    goBackEl.addEventListener('click',daRestart);
+}
+
+function daRestart() {
+    goBackEl.style.visibility = 'hidden';
+    console.log('You are at daRestart Function');
+    startEl.style.visibility ='visible';
+    startHeaderEl.style.visibility = 'visible';
+    startmsgEl.style.visibility = 'visible';
+    //startHeaderEl.innerHTML = gameTitle;
+    //startmsgEl.innerHTML = preGameMsg;
+    goBackEl.style.visibility = 'hidden';
+    questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
+    answerOne.style.visibility = 'hidden';
+    answerTwo.style.visibility = 'hidden';
+    answerThree.style.visibility = 'hidden';
+    answerFour.style.visibility = 'hidden';
+    correctEl.style.visibility = 'hidden';
+    initialsEl.style.visibility = 'hidden';
+    labelEl.style.visibility = 'hidden';
+    scoreBtnEl.style.visibility = 'hidden';
+    goBackEl.style.visibility = 'hidden';
+    
+    score = 0;
+    currentQuestion = 0;
+    playTime = 76;
+    initialsEl.value = '';              //blank out the input field for next iterations
+
+    startEl.addEventListener('click', scrdisplay);  //This starts the quiz.
+    startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
+    //startEl.addEventListener('click', preGame);
+}
+
+
 
 
  

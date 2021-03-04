@@ -117,3 +117,8 @@ label {
     grid-column: 4;
     grid-row: 8;
 }
+
+#goBack {
+    grid-column: 3;
+    grid-row: 8;
+}
