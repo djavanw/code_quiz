@@ -17,17 +17,15 @@ var initialsEl = document.querySelector('#initials');
 var scoreBtnEl = document.querySelector('#scoreBtn');
 var goBackEl = document.querySelector('#goBack');
 var clearScoresEl = document.querySelector('#clearScores');
-
-//var responsesEltwo = document.querySelectorAll('.responses');
-
+var userHiScore = document.querySelector('#daHsView');
 
 function unCover() {
-    questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
-    answerOne.style.visibility = 'visible';                     //This will hide the answer message before going to next question.
-    answerTwo.style.visibility = 'visible';
+    questionEl.style.visibility = 'visible';                    //Repeated code used to hide and unhide text
+    answerOne.style.visibility = 'visible';                     
+    answerTwo.style.visibility = 'visible';                     //The following will briefly hide the questions and answers before going to the next question.
     answerThree.style.visibility = 'visible';
     answerFour.style.visibility = 'visible';
-    //correctEl.style.visibility = 'hidden';
+    correctEl.style.visibility = 'hidden';                      //This will hide the answer message before going to next question.
     console.log('bottom of unCover');
 }
 
@@ -39,15 +37,17 @@ function coverIT() {
     answerFour.style.visibility = 'hidden';
     console.log('bottom of coverIT');
     } 
-    
 
-
-var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores
-var playTime = 76;                                                          //Overall amount of time for the quiz
+var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores will check local storage for content to add to or make new array.
+var playTime = 76;                                                          //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
-var transTime = 2;
+var transTime = 2;                                                          //Time for questions to transition after click.  Global use in other functions.
 
-var questAnsw = [
+var j = 0;                                                                  //Variables for genQuestion function.  Made Global to reference in other functions.
+var i;                                                                      //j and i are used for the loop count to generate the questions.
+var currentQuestion = 0;
+
+var questAnsw = [                                                           //Object/array for questions.  Index[5] contains the answer.
     {
         0: '1. Which method below is not associated with arrays?',
         1: 'a. sort()',
@@ -93,19 +93,17 @@ var questAnsw = [
         5: 'c. var'
     }
 ];
-
-let j = 0;
-let i;
-let currentQuestion = 0;                    //You had this as let currentQuestion = j;
+                    
 
 function preGame() {
+    highScoreEl.style.visibility = 'hidden';
     clearScoresEl.style.visibility = 'hidden';
     goBackEl.style.visibility = 'hidden';
     initialsEl.style.visibility = 'hidden';
     labelEl.style.visibility = 'hidden';
     scoreBtnEl.style.visibility = 'hidden';
     correctEl.style.visibility = 'hidden';
-       
+           
     coverIT();
 
     // questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
@@ -218,14 +216,11 @@ function genQuestion() {
         //     timerGame();
         //   }
           
-        
-        
         answerOne.addEventListener('click', checkAnswer); 
         answerTwo.addEventListener('click', checkAnswer);
         answerThree.addEventListener('click', checkAnswer);
         answerFour.addEventListener('click', checkAnswer);
-
-        
+       
     }   
        
 }
@@ -265,9 +260,6 @@ function checkAnswer(event) {
     //additionEl();
 }
 
-
-
-
 function transitionEl(event) {
     transTime = 2;
     console.log('Made it to the Question transition timer')
@@ -297,8 +289,6 @@ function transitionEl(event) {
     }, 1000);
 }
 
-
-
 function additionEl(){                                                  //Keeps count for the question array and the currentQuestion
     console.log('You are in the additionEl function');
     j++;
@@ -321,9 +311,6 @@ function quizInitials() {
     initialsEl.style.visibility = 'visible';
     scoreBtnEl.style.visibility = 'visible';
     
-           
-    //currentQuestion = 0;
-
     scoreBtnEl.addEventListener('click', saveScore);
         // initialsEl.addEventListener('submit', function(event) {        //Code example for Course activities
         //     event.preventDefault();                                    //anonmus function within the quizInitials function
@@ -359,7 +346,7 @@ function saveScore(event) {
         return;
     } 
 
-    highScoreEl.innerHTML = 'High Score: ' + userInfo.userInitials+ ' ' + userInfo.quizScore;
+    userHiScore.innerHTML = 'Last Score: ' + userInfo.userInitials + ' ' + userInfo.quizScore;
 
     scoreRay.push(userInfo);
     //document.forms[0].reset;
@@ -382,16 +369,26 @@ function saveScore(event) {
 
  function lastThing() {
     console.log('you are at lastThing function')
+    highScoreEl.style.visibility = 'visible';
     goBackEl.style.visibility = 'visible';
     clearScoresEl.style.visibility = 'visible';
     
+
+
     goBackEl.addEventListener('click', daRestart);
     clearScoresEl.addEventListener('click', function(event) {
         localStorage.clear();
     });
 }
 
+
+
+
+
+
+
 function daRestart() {
+    highScoreEl.style.visibility = 'hidden';
     goBackEl.style.visibility = 'hidden';
     clearScoresEl.style.visibility = 'hidden';
     console.log('You are at daRestart Function');
@@ -408,8 +405,7 @@ function daRestart() {
     initialsEl.value = '';              //blank out the input field for next iterations
     labelEl.style.color = 'black';
 
-    //coverIT();
-    
+      
     // questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
     // answerOne.style.visibility = 'hidden';
     // answerTwo.style.visibility = 'hidden';
@@ -424,8 +420,8 @@ function daRestart() {
     
     //transitionEl = 0;
     
-    startEl.addEventListener('click', scrdisplay);  //This starts the quiz.
-    startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
+    startEl.addEventListener('click', scrdisplay);              //This starts the quiz.
+    startEl.addEventListener('click', timerGame);               //This starts the quiz timer.
    
 }
 

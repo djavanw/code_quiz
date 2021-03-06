@@ -17,16 +17,16 @@
 #startheader, 
 #timer, 
 #score,
-#label, 
+#label,
+#startmsg, 
 #hiScore {
     text-align: center;
 }
 
-
- 
- #startmsg {
-    background-color: aqua;
-    text-align: center;
+#startmsg {
+    /* background-color: aqua; */
+    color: blue;
+    font-size: 22px;
     grid-column: 3 / span 3;
     grid-row: 4;
 }
@@ -55,7 +55,7 @@
 #question {
     grid-column: 3 / span 3;
     grid-row: 3;
-    font-size: 28px;
+    font-size: 26px;
     /* background-color: lightseagreen; */
 }
 
@@ -79,17 +79,20 @@
     grid-row: 7;
 }
 .responses {
-    background-color: cornflowerblue;
-    font-size: 22px;
+    /* background-color: cornflowerblue; */
+    font-size: 20px;
 } 
 
 .responses:hover {
-    color: lightskyblue;
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+    background-color: blue;
 }
 
 #correct {
     grid-column: 4;
-    grid-row: 6;
+    grid-row: 4;
     text-align: center;
     font-size: 30px;
     color: blue;
@@ -98,12 +101,14 @@
 
 #label {
     grid-column: 3 / span 3;
-    grid-row: 8;
+    grid-row: 6;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 #initials {
     grid-column: 4;
-    grid-row: 9;
+    grid-row: 7;
     font-size: 20px;
     height: 30px;
     width: 100%;
@@ -112,7 +117,7 @@
 
 #scoreBtn {
     grid-column: 4;
-    grid-row: 10;
+    grid-row: 8;
 }
 
 #start {
@@ -125,7 +130,17 @@
     grid-row: 8;
 }
 
+#hiScore {
+    grid-column: 4;
+    grid-row: 7;
+}
+
 #clearScores {
     grid-column: 5;
     grid-row: 8;
+}
+
+#daHsView {
+    grid-column: 2;
+    grid-row: 1;
 }
