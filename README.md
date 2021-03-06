@@ -7,9 +7,9 @@ This application will be utilizing HTML, CSS, and JavaScript.  JavaScript will b
 
 ## Screenshots of webpage
 
-![placeholder](./assets/images/coding_quiz_start_screen.jpeg)
+![Start web page](./assets/images/coding_quiz_start_screen.jpeg)
 
-![placeholder](./assets/images/)
+![Wrong answer page](./assets/images/coding_quiz_wrong_answer_screen.png)
 
 ![placeholder](./assets/images/)
 
