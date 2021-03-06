@@ -161,9 +161,9 @@ function timerGame(event) {                                            //This is
         console.log('question: ' + currentQuestion);
         console.log('playTime: ' + playTime);
         if(
-            (playTime >= 0 && currentQuestion >= questAnsw.length) ||
+            (playTime >= 0 && currentQuestion > questAnsw.length) ||
             (playTime < 0 && currentQuestion <= questAnsw.length)  ||
-            (playTime < 0 && currentQuestion >= questAnsw.length)  ||
+            (playTime < 0 && currentQuestion > questAnsw.length)  ||
             (playTime <= 0))
         {
             clearInterval(gameInterval);
