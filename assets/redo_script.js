@@ -27,6 +27,7 @@ function unCover() {
     answerFour.style.visibility = 'visible';
     correctEl.style.visibility = 'hidden';                      //This will hide the answer message before going to next question.
     console.log('bottom of unCover');
+    return;
 }
 
 function coverIT() {
@@ -36,12 +37,13 @@ function coverIT() {
     answerThree.style.visibility = 'hidden';
     answerFour.style.visibility = 'hidden';
     console.log('bottom of coverIT');
+    return;
     } 
 
 var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores will check local storage for content to add to or make new array.
-var playTime = 76;                                                          //Overall amount of time for the quiz. Global use in other functions.
+var playTime = 20;                                                          //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
-var transTime = 2;                                                          //Time for questions to transition after click.  Global use in other functions.
+var transTime;                                                          //Time for questions to transition after click.  Global use in other functions.
 
 var j = 0;                                                                  //Variables for genQuestion function.  Made Global to reference in other functions.
 var i;                                                                      //j and i are used for the loop count to generate the questions.
@@ -129,8 +131,8 @@ function preGame() {
     startHeaderEl.innerHTML = gameTitle;
     startmsgEl.innerHTML = preGameMsg;
     
-    startEl.addEventListener('click', scrdisplay);  //This starts the quiz.
-    startEl.addEventListener('click', timerGame);    //This starts the quiz timer.
+    startEl.addEventListener('click', scrdisplay);                  //This starts the quiz.
+    startEl.addEventListener('click', timerGame);                   //This starts the quiz timer.
 
 }
 
@@ -140,7 +142,7 @@ function scrdisplay() {
     startmsgEl.style.visibility = 'hidden';
     console.log('You are in scrdisplay function')
     unCover();
-    // questionEl.style.visibility = 'visible';                    //The following will briefly hide the questions and answers before going to the next question.
+    // questionEl.style.visibility = 'visible';                       //The following will briefly hide the questions and answers before going to the next question.
     // answerOne.style.visibility = 'visible';
     // answerTwo.style.visibility = 'visible';
     // answerThree.style.visibility = 'visible';
@@ -149,7 +151,7 @@ function scrdisplay() {
     genQuestion();
 }
 
-function timerGame(event) {                              //This is the main quiz time and start at first click.
+function timerGame(event) {                                            //This is the main quiz time and start at first click.
     console.log('This timer is going');
     console.log(event);
     
@@ -158,12 +160,16 @@ function timerGame(event) {                              //This is the main quiz
         timerEl.innerHTML = 'Time: ' + playTime;
         console.log('question: ' + currentQuestion);
         console.log('playTime: ' + playTime);
-        if(playTime > 0 && currentQuestion > questAnsw.length ||
-           playTime <= 0 && currentQuestion < questAnsw.length) 
+        if(
+            (playTime >= 0 && currentQuestion >= questAnsw.length) ||
+            (playTime < 0 && currentQuestion <= questAnsw.length)  ||
+            (playTime < 0 && currentQuestion >= questAnsw.length)  ||
+            (playTime <= 0))
         {
             clearInterval(gameInterval);
             coverIT();
             console.log('Clear playTime');
+            
             //timerEl.innerHTML = 'You finished with a score of: ' + score;
             quizInitials();
         }
@@ -209,12 +215,12 @@ function genQuestion() {
         // else {
         //     console.log('iteration finished')
         // }
-       
+        
         console.log('Loop finished ' + i);
-        // if(playTime === 0){
-        //     coverIT;
-        //     timerGame();
-        //   }
+        if(playTime <= 0) {
+            coverIT();
+            quizInitials();
+        }
           
         answerOne.addEventListener('click', checkAnswer); 
         answerTwo.addEventListener('click', checkAnswer);
@@ -262,18 +268,30 @@ function checkAnswer(event) {
 
 function transitionEl(event) {
     transTime = 2;
-    console.log('Made it to the Question transition timer')
+    // if(playTime <= 0) {
+    //     quizInitials();
+    // }
+    console.log('Made it to the Question transition timer ' + transTime)
     var transInterval = setInterval(function(){
-        coverIT();
-        transTime--;
+                    
         
+        
+
+
+
+        transTime--;
+        coverIT();
         // questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
         // answerOne.style.visibility = 'hidden';
         // answerTwo.style.visibility = 'hidden';
         // answerThree.style.visibility = 'hidden';
         // answerFour.style.visibility = 'hidden';
                
-        if(transTime <= 0 || playTime <= 0) {
+        if(
+            (transTime <= 0 || playTime <= 0) ||
+            (transTime <= 0 && playTime <= 0) ||
+            (transTime >= 0 && playTime <= 0)
+          ) {
             clearInterval(transInterval);
             unCover();
             console.log('XXXX XXXtransitionTime ' + transTime);
@@ -284,8 +302,7 @@ function transitionEl(event) {
             // answerFour.style.visibility = 'visible';
             // correctEl.style.visibility = 'hidden';
            
-        additionEl();
-        }
+        additionEl();}
     }, 1000);
 }
 
@@ -299,10 +316,12 @@ function additionEl(){                                                  //Keeps 
         console.log(j);
         timerGame();                                                     //All questions answered, this goes to the game timer to be stopped
     }
+    
     genQuestion();
 };
 
 function quizInitials() {
+    
     console.log('You are in the Quiz Initials function');
     correctEl.style.visibility = 'visible';
     correctEl.innerHTML = 'Your final score is ' + score;
@@ -312,6 +331,10 @@ function quizInitials() {
     scoreBtnEl.style.visibility = 'visible';
     
     scoreBtnEl.addEventListener('click', saveScore);
+    if(playTime <= 0) {
+        coverIT();
+    }
+
         // initialsEl.addEventListener('submit', function(event) {        //Code example for Course activities
         //     event.preventDefault();                                    //anonmus function within the quizInitials function
 
@@ -382,11 +405,6 @@ function saveScore(event) {
 }
 
 
-
-
-
-
-
 function daRestart() {
     highScoreEl.style.visibility = 'hidden';
     goBackEl.style.visibility = 'hidden';
@@ -401,7 +419,7 @@ function daRestart() {
     score = 0;
     currentQuestion = 0;
     j=0;
-    playTime = 76;
+    playTime = 20;
     initialsEl.value = '';              //blank out the input field for next iterations
     labelEl.style.color = 'black';
 
