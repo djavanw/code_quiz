@@ -40,6 +40,48 @@ function coverIT() {
     return;
     } 
 
+function sevenHide() {
+    correctEl.style.visibility = 'hidden';
+    scoreBtnEl.style.visibility = 'hidden';
+    labelEl.style.visibility = 'hidden';
+    initialsEl.style.visibility = 'hidden';
+    goBackEl.style.visibility = 'hidden';
+    highScoreEl.style.visibility = 'hidden';
+    clearScoresEl.style.visibility = 'hidden';
+    return;
+}
+
+function fourHide() {
+    correctEl.style.visibility = 'hidden';
+    labelEl.style.visibility = 'hidden';                //visibility would not work
+    initialsEl.style.visibility = 'hidden';
+    scoreBtnEl.style.visibility = 'hidden';
+    return;
+}
+
+function fourSee() {
+    correctEl.style.visibility = 'visible';
+    labelEl.style.visibility = 'visible';
+    initialsEl.style.visibility = 'visible';
+    scoreBtnEl.style.visibility = 'visible';
+    return;
+}
+
+function threeHide() {
+    startEl.style.visibility = 'hidden';
+    startHeaderEl.style.visibility = 'hidden';
+    startmsgEl.style.visibility = 'hidden';
+    return;
+}
+
+function threeSee() {
+    startEl.style.visibility = 'visible';
+    startHeaderEl.style.visibility = 'visible';
+    startmsgEl.style.visibility = 'visible';
+    return;
+}
+
+
 var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores will check local storage for content to add to or make new array.
 var playTime = 76;                                                          //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
@@ -95,17 +137,16 @@ var questAnsw = [                                                           //Ob
         5: 'c. var'
     }
 ];
-                    
 
 function preGame() {
-    highScoreEl.style.visibility = 'hidden';
-    clearScoresEl.style.visibility = 'hidden';
-    goBackEl.style.visibility = 'hidden';
-    initialsEl.style.visibility = 'hidden';
-    labelEl.style.visibility = 'hidden';
-    scoreBtnEl.style.visibility = 'hidden';
-    correctEl.style.visibility = 'hidden';
-           
+    // highScoreEl.style.visibility = 'hidden';
+    // clearScoresEl.style.visibility = 'hidden';
+    // goBackEl.style.visibility = 'hidden';
+    // initialsEl.style.visibility = 'hidden';
+    // labelEl.style.visibility = 'hidden';
+    // scoreBtnEl.style.visibility = 'hidden';
+    // correctEl.style.visibility = 'hidden';
+    sevenHide();       
     coverIT();
 
     // questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
@@ -113,8 +154,7 @@ function preGame() {
     // answerTwo.style.visibility = 'hidden';
     // answerThree.style.visibility = 'hidden';
     // answerFour.style.visibility = 'hidden';
-    
-    
+        
     // if(playTime >= 0 && currentQuestion >= questAnsw.length) {   //This checks to see if the quiz is over (all questions answered)
     //    quizInitials();
     //  }    
@@ -136,11 +176,13 @@ function preGame() {
 
 }
 
+
 function scrdisplay() {
-    startEl.style.visibility = 'hidden';
-    startHeaderEl.style.visibility = 'hidden';
-    startmsgEl.style.visibility = 'hidden';
+    // startEl.style.visibility = 'hidden';
+    // startHeaderEl.style.visibility = 'hidden';
+    // startmsgEl.style.visibility = 'hidden';
     console.log('You are in scrdisplay function')
+    threeHide();
     unCover();
     // questionEl.style.visibility = 'visible';                       //The following will briefly hide the questions and answers before going to the next question.
     // answerOne.style.visibility = 'visible';
@@ -273,12 +315,7 @@ function transitionEl(event) {
     // }
     console.log('Made it to the Question transition timer ' + transTime)
     var transInterval = setInterval(function(){
-                    
-        
-        
-
-
-
+  
         transTime--;
         coverIT();
         // questionEl.style.visibility = 'hidden';                    //The following will briefly hide the questions and answers before going to the next question.
@@ -320,15 +357,16 @@ function additionEl(){                                                  //Keeps 
     genQuestion();
 };
 
+
 function quizInitials() {
-    
+    fourSee();
     console.log('You are in the Quiz Initials function');
-    correctEl.style.visibility = 'visible';
+    // correctEl.style.visibility = 'visible';
     correctEl.innerHTML = 'Your final score is ' + score;
-    labelEl.style.visibility = 'visible';
+    // labelEl.style.visibility = 'visible';
     labelEl.innerHTML = 'Enter your initials below then click Enter';
-    initialsEl.style.visibility = 'visible';
-    scoreBtnEl.style.visibility = 'visible';
+    // initialsEl.style.visibility = 'visible';
+    // scoreBtnEl.style.visibility = 'visible';
     
     scoreBtnEl.addEventListener('click', saveScore);
     if(playTime <= 0) {
@@ -373,10 +411,11 @@ function saveScore(event) {
 
     scoreRay.push(userInfo);
     //document.forms[0].reset;
-    labelEl.style.visibility = 'hidden';                //visibility would not work
-    initialsEl.style.visibility = 'hidden';
-    scoreBtnEl.style.visibility = 'hidden';
-    correctEl.style.visibility = 'hidden';
+    fourHide();
+    // labelEl.style.visibility = 'hidden';                
+    // initialsEl.style.visibility = 'hidden';
+    // scoreBtnEl.style.visibility = 'hidden';
+    // correctEl.style.visibility = 'hidden';
     //daFormEl.reset();
     console.log(scoreRay);
     console.log('Initials pushed');
@@ -392,27 +431,26 @@ function saveScore(event) {
 
  function lastThing() {
     console.log('you are at lastThing function')
-    highScoreEl.style.visibility = 'visible';
     goBackEl.style.visibility = 'visible';
+    highScoreEl.style.visibility = 'visible';
     clearScoresEl.style.visibility = 'visible';
     
-
-
     goBackEl.addEventListener('click', daRestart);
     clearScoresEl.addEventListener('click', function(event) {
         localStorage.clear();
     });
 }
 
-
 function daRestart() {
-    highScoreEl.style.visibility = 'hidden';
     goBackEl.style.visibility = 'hidden';
+    highScoreEl.style.visibility = 'hidden';
     clearScoresEl.style.visibility = 'hidden';
     console.log('You are at daRestart Function');
-    startEl.style.visibility ='visible';
-    startHeaderEl.style.visibility = 'visible';
-    startmsgEl.style.visibility = 'visible';
+    
+    threeSee();
+    // startEl.style.visibility ='visible';
+    // startHeaderEl.style.visibility = 'visible';
+    // startmsgEl.style.visibility = 'visible';
     // startHeaderEl.innerHTML = gameTitle;
     // startmsgEl.innerHTML = preGameMsg;
     //goBackEl.style.visibility = 'hidden';
@@ -429,24 +467,19 @@ function daRestart() {
     // answerTwo.style.visibility = 'hidden';
     // answerThree.style.visibility = 'hidden';
     // answerFour.style.visibility = 'hidden';
-    correctEl.style.visibility = 'hidden';
-    initialsEl.style.visibility = 'hidden';
-    labelEl.style.visibility = 'hidden';
-    scoreBtnEl.style.visibility = 'hidden';
+    fourHide();
+    // correctEl.style.visibility = 'hidden';
+    // initialsEl.style.visibility = 'hidden';
+    // labelEl.style.visibility = 'hidden';
+    // scoreBtnEl.style.visibility = 'hidden';
     //goBackEl.style.visibility = 'hidden';
-    
-    
+        
     //transitionEl = 0;
     
     startEl.addEventListener('click', scrdisplay);              //This starts the quiz.
     startEl.addEventListener('click', timerGame);               //This starts the quiz timer.
    
 }
-
-
-
-
-
 
 
 preGame();
