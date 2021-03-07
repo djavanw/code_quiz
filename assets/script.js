@@ -27,6 +27,12 @@ var quizHiScore4 = document.querySelector('#quizFive');
 var quizHiScore5 = document.querySelector('#quizSix');
 var quizHiScore6 = document.querySelector('#quizSeven');
 
+var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];
+var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || [];
+
+
+var k;
+
 function unCover() {
     questionEl.style.visibility = 'visible';                    //Repeated code used to hide and unhide text
     answerOne.style.visibility = 'visible';                     
@@ -276,14 +282,12 @@ function quizInitials() {
     }
 }
 
-function saveScore(event) {
+function saveScore() {
     var userInfo = {
         userInitials: initialsEl.value.trim(),
         quizScore: score 
     }
-
-    var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];
-
+    
     if(userInfo.userInitials === '' || userInfo.userInitials === null) {
         labelEl.style.color = 'red';
         labelEl.innerHTML = 'You must enter your initials';
@@ -291,15 +295,18 @@ function saveScore(event) {
     } 
     lastScoreEl.innerHTML = 'Last Score: ' + userInfo.userInitials + ' ' + userInfo.quizScore;
     scoreRay.push(userInfo);
+    currentScore.push(userInfo);
     fourHide();
-    localStorage.setItem('scoreRay', JSON.stringify(scoreRay) );
-       
-    var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || [];                                                                //Sorts values in the object array from highest to lowest.
-    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
     
-    for(let k = 0; k > currentScore.length; k++) {
-        quizHiScore[k].innerHTML = '# ' + currentScore[k].quizScore + ' ' +  currentScore[k].userInitials;
-    }
+    localStorage.setItem('currentScore', JSON.stringify(currentScore));
+    localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
+                                                                                            //Sorts values in the object array from highest to lowest.
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
+    console.log(currentScore);
+    for(k = 0; k > currentScore.length; k++) {
+        quizHiScore[k].innerText = currentScore[k].quizScore + currentScore[k].userInitials;
+        }
+  
 
     // if(daScore.length == null) {
     //     daScore[0].quizScore = 'No Score';                                                                                      //High Scores
@@ -335,7 +342,7 @@ function saveScore(event) {
     clearScoresEl.style.visibility = 'visible';     
 
     highScoreOff();                                                                                 //blanks the high scores out, so the View High Score button must be used.
-    
+    console.log('at the end of saveScore')
     lastThing();   
  }
 
