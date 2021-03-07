@@ -35,7 +35,6 @@ function unCover() {
     answerThree.style.visibility = 'visible';
     answerFour.style.visibility = 'visible';
     correctEl.style.visibility = 'hidden';                      //This will hide the answer message before going to next question.
-    console.log('bottom of unCover');
     return;
 }
 
@@ -45,7 +44,6 @@ function coverIT() {
     answerTwo.style.visibility = 'hidden';
     answerThree.style.visibility = 'hidden';
     answerFour.style.visibility = 'hidden';
-    console.log('bottom of coverIT');
     return;
     } 
 
@@ -264,10 +262,8 @@ function transitionEl(event) {                                      //Transition
 
 function additionEl(){                                                  //Keeps count for the question array and the currentQuestion
     j++;                                                                //Loop counter for the question count.
-    console.log('Just added to the Question count');
     if(currentQuestion >= questAnsw.length) {
         j = 0;
-        console.log(j);
         timerGame();                                                     //All questions answered, this goes to the game timer to be stopped
     }
     genQuestion();
@@ -302,15 +298,37 @@ function saveScore(event) {
     highScoreEl.style.visibility = 'visible';
     clearScoresEl.style.visibility = 'visible';
 
-    var daScore = JSON.parse(localStorage.getItem('scoreRay'));
-    daScore.sort((value1, value2) => value2.quizScore - value1.quizScore);          //Sorts values in the object array from highest to lowest.
-    quizOneEl.innerHTML = '1. ' + daScore[0].quizScore + ' ' +  daScore[0].userInitials;         //High Scores
-    quizTwoEl.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;         //Tried to do a loop, but I would not work.
-    quizThreeEl.innerHTML = '3. ' + daScore[2].quizScore + ' ' + daScore[2].userInitials;        //This block will list the top 7 high scores.
-    quizfourEl.innerHTML = '4. ' + daScore[3].quizScore + ' ' + daScore[3].userInitials;
-    quizfiveEl.innerHTML = '5. ' + daScore[4].quizScore + ' ' + daScore[4].userInitials;
-    quizsixEl.innerHTML = '6. ' + daScore[5].quizScore + ' ' + daScore[5].userInitials;
-    quizsevenEl.innerHTML ='7. ' + daScore[6].quizScore + ' ' + daScore[6].userInitials;
+    var daScore = JSON.parse(localStorage.getItem('scoreRay')) || [];
+    daScore.sort((value1, value2) => value2.quizScore - value1.quizScore);                         //Sorts values in the object array from highest to lowest.
+    if(daScore.length === null) {
+        daScore[0].quizScore = 'No Score';                                                                                      //High Scores
+        quizOneEl.innerHTML = '1. ' + daScore[0].quizScore + ' ' +  daScore[0].userInitials;
+    }                                                            
+    if(daScore.length == null) {
+        daScore[1].quizScore = 'No Score';                                                                                       //This block will list the top 7 high scores.
+        quizTwoEl.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;            //Tried to do a loop, but I would not work.
+    }
+    if(daScore.length == null) {
+        daScore[2].quizScore = 'No Score';
+        quizThreeEl.innerHTML = '3. ' + daScore[2].quizScore + ' ' + daScore[2].userInitials;
+    }
+    if(daScore.length == null) {
+        daScore[3].quizScore = 'No Score';
+        quizfourEl.innerHTML = '4. ' + daScore[3].quizScore + ' ' + daScore[3].userInitials;
+    }  
+    if(daScore.length == null) {
+        daScore[4].quizScore = 'No Score';
+        quizfiveEl.innerHTML = '5. ' + daScore[4].quizScore + ' ' + daScore[4].userInitials;
+    }
+    if(daScore.length == null) {
+        daScore[5].quizScore = 'No Score';
+        quizsixEl.innerHTML = '6. ' + daScore[5].quizScore + ' ' + daScore[5].userInitials;
+    }
+    if(daScore.length == null) {
+        daScore[6].quizScore = 'No Score';
+        quizsevenEl.innerHTML ='7. ' + daScore[6].quizScore + ' ' + daScore[6].userInitials;
+    }   
+        
 
     highScoreOff();                                             //blanks the high scores out, so the View High Score button must be used.
     
