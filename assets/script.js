@@ -18,7 +18,6 @@ var scoreBtnEl = document.querySelector('#scoreBtn');
 var goBackEl = document.querySelector('#goBack');
 var clearScoresEl = document.querySelector('#clearScores');
 var lastScoreEl = document.querySelector('#lastScore');
-var scoreContainerEl = document.querySelector('#score-container');
 
 var quizHiScore0 = document.querySelector('#quizOne');             //High Scores  queryselectorAll for visibility would not work. 
 var quizHiScore1 = document.querySelector('#quizTwo');
@@ -100,7 +99,7 @@ function highScoreOff() {
 }
 
 function highScoreOn() {
-    quizHiScore0.style.visibility = 'visible';                          //The block turns the high visibility on
+    quizHiScore0.style.visibility = 'visible';                                                      //The block turns the high visibility on
     quizHiScore1.style.visibility = 'visible';
     quizHiScore2.style.visibility = 'visible';
     quizHiScore3.style.visibility = 'visible';
@@ -110,16 +109,14 @@ function highScoreOn() {
     return;
 }
 
-          //Array for player initials and scores will check local storage for content to add to or make new array.
-var playTime = 76;                                                          //Overall amount of time for the quiz. Global use in other functions.
+                                                                                                    //Array for player initials and scores will check local storage for content to add to or make new array.
+var playTime = 76;                                                                               //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
-var transTime;                                                          //Time for questions to transition after click.  Global use in other functions.
-
-var j = 0;                                                                  //Variables for genQuestion function.  Made Global to reference in other functions.
-var i;                                                                      //j and i are used for the loop count to generate the questions.
+var transTime;                                                                                  //Time for questions to transition after click.  Global use in other functions.
+var j = 0;                                                                                      //Variables for genQuestion function.  Made Global to reference in other functions.
+var i;                                                                                           //j and i are used for the loop count to generate the questions.
 var currentQuestion = 0;
-
-var questAnsw = [                                                           //Object/array for questions.  Index[5] contains the answer.
+var questAnsw = [                                                                               //Object/array for questions.  Index[5] contains the answer.
     {
         0: '1. Which method below is not associated with arrays?',
         1: 'a. sort()',
@@ -166,22 +163,22 @@ var questAnsw = [                                                           //Ob
     }
 ];
 
-function preGame() {                                                //Event listeners for the beginning of the quiz.
+function preGame() {                                                                //Event listeners for the beginning of the quiz.
     sevenHide();       
     coverIT();
     startHeaderEl.innerHTML = gameTitle;
     startmsgEl.innerHTML = preGameMsg;
-    startEl.addEventListener('click', scrdisplay);                  //This starts the quiz.
-    startEl.addEventListener('click', timerGame);                   //This starts the quiz timer.
+    startEl.addEventListener('click', scrdisplay);                                  //This starts the quiz.
+    startEl.addEventListener('click', timerGame);                                   //This starts the quiz timer.
 }
 
-function scrdisplay() {                                              //Turns elements on and off for visibility.
+function scrdisplay() {                                                             //Turns elements on and off for visibility.
     threeHide();
     unCover();
     genQuestion();
 }
 
-function timerGame(event) {                                            //This is the main quiz time and start at first click.
+function timerGame(event) {                                                         //This is the main quiz time and start at first click.
     var gameInterval = setInterval(function(){
         playTime--;
         timerEl.innerHTML = 'Time: ' + playTime;
@@ -301,7 +298,7 @@ function saveScore(event) {
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
     
     for(let k = 0; k > currentScore.length; k++) {
-        quizHiScore[k].innerHTML = k++ + '. ' + currentScore[k].quizScore + ' ' +  currentScore[k].userInitials;
+        quizHiScore[k].innerHTML = '# ' + currentScore[k].quizScore + ' ' +  currentScore[k].userInitials;
     }
 
     // if(daScore.length == null) {
@@ -310,7 +307,7 @@ function saveScore(event) {
     // }                                                            
     // if(daScore.length == null) {
     //     daScore[1].quizScore = 'No Score';                                                                                       //This block will list the top 7 high scores.
-        // quizTwo1.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;                                    //Tried to do a loop, but I would not work.
+        // quizTwo1.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;                                      //Tried to do a loop, but I would not work.
     // }
     // if(daScore.length == null) {
     //     daScore[2].quizScore = 'No Score';

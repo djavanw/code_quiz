@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-size: 20px;
+    text-align: center;
 }
 
 .container {
@@ -10,17 +11,6 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(15, 70px);
-}
-
-#score, 
-#startmsg, 
-#startheader, 
-#timer, 
-#score,
-#label,
-#startmsg, 
-#hiScore {
-    text-align: center;
 }
 
 #startmsg {
@@ -140,12 +130,56 @@
     grid-row: 1;
 }
 
-#score-container {
-    grid-column: 2;
-    grid-row: 1 / span 2;
+#scoreContainer {
+    grid-column: 1;
+    grid-row: 1 / spa 4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
 }
 
-.bigScores {
-    grid-column: 2;
-    grid-row: 1;
+h2 {
+    flex: 1;
 }
+
+#quizOne {
+    flex: 1;
+}
+
+#quizTwo {
+    flex: 1;
+}
+#quizThree {
+    flex: 1;
+    
+}
+#quizFour {
+    flex: 1;
+}
+
+#quizFive {
+    flex: 1;
+}
+
+#quizSix {
+    flex: 1;
+}
+
+#quizSeven {
+    flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
