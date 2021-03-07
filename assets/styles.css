@@ -24,7 +24,6 @@
 }
 
 #startmsg {
-    /* background-color: aqua; */
     color: blue;
     font-size: 22px;
     grid-column: 3 / span 3;
@@ -35,11 +34,6 @@
     font-size: 30px;
     grid-column: 3 / span 3;
     grid-row: 3;
-}
-
-#hiScore {
-    grid-column: 2;
-    grid-row: 1;
 }
 
 #score {
@@ -56,7 +50,6 @@
     grid-column: 3 / span 2;
     grid-row: 3;
     font-size: 26px;
-    /* background-color: lightseagreen; */
 }
 
 #answ1 {
@@ -78,15 +71,13 @@
     grid-column: 3;
     grid-row: 7;
 }
-.responses {
-    /* background-color: aqua; */
-} 
 
 .responses:hover {
     color: white;
     text-decoration: underline;
     font-weight: bold;
     background-color: blue;
+    cursor: pointer;
 }
 
 #correct {
@@ -99,7 +90,7 @@
 }
 
 #label {
-    grid-column: 4;
+    grid-column: 3 / span 3;
     grid-row: 6;
     font-size: 24px;
     font-weight: bold;
@@ -117,29 +108,44 @@
 #scoreBtn {
     grid-column: 4;
     grid-row: 8;
+    cursor: pointer;
 }
 
 #start {
     grid-column: 4;
     grid-row: 8;
+    cursor: pointer;
 }
 
 #goBack {
     grid-column: 2;
     grid-row: 8;
+    cursor: pointer;
 }
 
 #hiScore {
     grid-column: 4;
-    grid-row: 8;
+    grid-row: 9;
+    cursor: pointer;
 }
 
 #clearScores {
     grid-column: 6;
     grid-row: 8;
+    cursor: pointer;
 }
 
-#daHsView {
+#lastScore {
+    grid-column: 4;
+    grid-row: 1;
+}
+
+#score-container {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+}
+
+.bigScores {
     grid-column: 2;
     grid-row: 1;
 }
