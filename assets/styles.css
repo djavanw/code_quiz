@@ -24,7 +24,6 @@
 }
 
 #startmsg {
-    /* background-color: aqua; */
     color: blue;
     font-size: 22px;
     grid-column: 3 / span 3;
