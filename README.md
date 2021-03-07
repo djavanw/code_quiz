@@ -11,7 +11,7 @@ This application will be utilizing HTML, CSS, and JavaScript.  JavaScript will b
 
 ![Wrong answer page](./assets/images/coding_quiz_wrong_answer_screen.png)
 
-![Show High Score](./assets/images/coding_quiz_end_hi_scores.jpeg)
+![Show High Scores](./assets/images/coding_quiz_end_hi_scores.jpeg)
 
 ## Webpage URL
 
