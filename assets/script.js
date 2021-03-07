@@ -20,13 +20,13 @@ var clearScoresEl = document.querySelector('#clearScores');
 var lastScoreEl = document.querySelector('#lastScore');
 var scoreContainerEl = document.querySelector('#score-container');
 
-var quizOneEl = document.querySelector('#quizOne');             //High Scores  queryselectorAll for visibility would not work. 
-var quizTwoEl = document.querySelector('#quizTwo');
-var quizThreeEl = document.querySelector('#quizThree');
-var quizfourEl = document.querySelector('#quizFour');
-var quizfiveEl = document.querySelector('#quizFive');
-var quizsixEl = document.querySelector('#quizSix');
-var quizsevenEl = document.querySelector('#quizSeven');
+var quizHiScore0 = document.querySelector('#quizOne');             //High Scores  queryselectorAll for visibility would not work. 
+var quizHiScore1 = document.querySelector('#quizTwo');
+var quizHiScore2 = document.querySelector('#quizThree');
+var quizHiScore3 = document.querySelector('#quizFour');
+var quizHiScore4 = document.querySelector('#quizFive');
+var quizHiScore5 = document.querySelector('#quizSix');
+var quizHiScore6 = document.querySelector('#quizSeven');
 
 function unCover() {
     questionEl.style.visibility = 'visible';                    //Repeated code used to hide and unhide text
@@ -89,28 +89,28 @@ function threeSee() {
 }
 
 function highScoreOff() {
-    quizOneEl.style.visibility = 'hidden';                          //The block turns the high visibility off
-    quizTwoEl.style.visibility = 'hidden';
-    quizThreeEl.style.visibility = 'hidden';
-    quizfourEl.style.visibility = 'hidden';
-    quizfiveEl.style.visibility = 'hidden';
-    quizsixEl.style.visibility = 'hidden';
-    quizsevenEl.style.visibility = 'hidden';
+    quizHiScore0.style.visibility = 'hidden';                          //The block turns the high visibility off
+    quizHiScore1.style.visibility = 'hidden';
+    quizHiScore2.style.visibility = 'hidden';
+    quizHiScore3.style.visibility = 'hidden';
+    quizHiScore4.style.visibility = 'hidden';
+    quizHiScore5.style.visibility = 'hidden';
+    quizHiScore6.style.visibility = 'hidden';
     return;
 }
 
 function highScoreOn() {
-    quizOneEl.style.visibility = 'visible';                          //The block turns the high visibility on
-    quizTwoEl.style.visibility = 'visible';
-    quizThreeEl.style.visibility = 'visible';
-    quizfourEl.style.visibility = 'visible';
-    quizfiveEl.style.visibility = 'visible';
-    quizsixEl.style.visibility = 'visible';
-    quizsevenEl.style.visibility = 'visible';
+    quizHiScore0.style.visibility = 'visible';                          //The block turns the high visibility on
+    quizHiScore1.style.visibility = 'visible';
+    quizHiScore2.style.visibility = 'visible';
+    quizHiScore3.style.visibility = 'visible';
+    quizHiScore4.style.visibility = 'visible';
+    quizHiScore5.style.visibility = 'visible';
+    quizHiScore6.style.visibility = 'visible';
     return;
 }
 
-var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];          //Array for player initials and scores will check local storage for content to add to or make new array.
+          //Array for player initials and scores will check local storage for content to add to or make new array.
 var playTime = 76;                                                          //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
 var transTime;                                                          //Time for questions to transition after click.  Global use in other functions.
@@ -284,6 +284,9 @@ function saveScore(event) {
         userInitials: initialsEl.value.trim(),
         quizScore: score 
     }
+
+    var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];
+
     if(userInfo.userInitials === '' || userInfo.userInitials === null) {
         labelEl.style.color = 'red';
         labelEl.innerHTML = 'You must enter your initials';
@@ -294,43 +297,47 @@ function saveScore(event) {
     fourHide();
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay) );
        
+    var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || [];                                                                //Sorts values in the object array from highest to lowest.
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
+    
+    for(let k = 0; k > currentScore.length; k++) {
+        quizHiScore[k].innerHTML = k++ + '. ' + currentScore[k].quizScore + ' ' +  currentScore[k].userInitials;
+    }
+
+    // if(daScore.length == null) {
+    //     daScore[0].quizScore = 'No Score';                                                                                      //High Scores
+    //     quizOne0.innerHTML = '1. ' + daScore[0].quizScore + ' ' +  daScore[0].userInitials;
+    // }                                                            
+    // if(daScore.length == null) {
+    //     daScore[1].quizScore = 'No Score';                                                                                       //This block will list the top 7 high scores.
+        // quizTwo1.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;                                    //Tried to do a loop, but I would not work.
+    // }
+    // if(daScore.length == null) {
+    //     daScore[2].quizScore = 'No Score';
+    //     quizThree2.innerHTML = '3. ' + daScore[2].quizScore + ' ' + daScore[2].userInitials;
+    // }
+    // if(daScore.length == null) {
+    //     daScore[3].quizScore = 'No Score';
+    //     quizfour3.innerHTML = '4. ' + daScore[3].quizScore + ' ' + daScore[3].userInitials;
+    // }  
+    // if(daScore.length == null) {
+    //     daScore[4].quizScore = 'No Score';
+    //     quizfive4.innerHTML = '5. ' + daScore[4].quizScore + ' ' + daScore[4].userInitials;
+    // }
+    // if(daScore.length == null) {
+    //     daScore[5].quizScore = 'No Score';
+    //     quizsix5.innerHTML = '6. ' + daScore[5].quizScore + ' ' + daScore[5].userInitials;
+    // }
+    // if(daScore.length == null) {
+    //     daScore[6].quizScore = 'No Score';
+    //     quizseven6.innerHTML ='7. ' + daScore[6].quizScore + ' ' + daScore[6].userInitials;
+    // }
+
     goBackEl.style.visibility = 'visible';
     highScoreEl.style.visibility = 'visible';
-    clearScoresEl.style.visibility = 'visible';
+    clearScoresEl.style.visibility = 'visible';     
 
-    var daScore = JSON.parse(localStorage.getItem('scoreRay')) || [];
-    daScore.sort((value1, value2) => value2.quizScore - value1.quizScore);                         //Sorts values in the object array from highest to lowest.
-    if(daScore.length === null) {
-        daScore[0].quizScore = 'No Score';                                                                                      //High Scores
-        quizOneEl.innerHTML = '1. ' + daScore[0].quizScore + ' ' +  daScore[0].userInitials;
-    }                                                            
-    if(daScore.length == null) {
-        daScore[1].quizScore = 'No Score';                                                                                       //This block will list the top 7 high scores.
-        quizTwoEl.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;            //Tried to do a loop, but I would not work.
-    }
-    if(daScore.length == null) {
-        daScore[2].quizScore = 'No Score';
-        quizThreeEl.innerHTML = '3. ' + daScore[2].quizScore + ' ' + daScore[2].userInitials;
-    }
-    if(daScore.length == null) {
-        daScore[3].quizScore = 'No Score';
-        quizfourEl.innerHTML = '4. ' + daScore[3].quizScore + ' ' + daScore[3].userInitials;
-    }  
-    if(daScore.length == null) {
-        daScore[4].quizScore = 'No Score';
-        quizfiveEl.innerHTML = '5. ' + daScore[4].quizScore + ' ' + daScore[4].userInitials;
-    }
-    if(daScore.length == null) {
-        daScore[5].quizScore = 'No Score';
-        quizsixEl.innerHTML = '6. ' + daScore[5].quizScore + ' ' + daScore[5].userInitials;
-    }
-    if(daScore.length == null) {
-        daScore[6].quizScore = 'No Score';
-        quizsevenEl.innerHTML ='7. ' + daScore[6].quizScore + ' ' + daScore[6].userInitials;
-    }   
-        
-
-    highScoreOff();                                             //blanks the high scores out, so the View High Score button must be used.
+    highScoreOff();                                                                                 //blanks the high scores out, so the View High Score button must be used.
     
     lastThing();   
  }
