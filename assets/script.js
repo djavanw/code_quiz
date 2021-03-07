@@ -347,3 +347,4 @@ function daRestart() {
 }
 
 preGame();
+
