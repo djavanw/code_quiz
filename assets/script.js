@@ -291,7 +291,7 @@ function seeHighScore(event) {
     var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
     
-    for(let k = 0; k < currentScore.length; k++){                                       //revised loop with append
+    for(let k = 0; k < 7; k++){                                       //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
     listHi.append(li);
