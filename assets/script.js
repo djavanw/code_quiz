@@ -1,7 +1,7 @@
 var gameTitle = 'Coding Quiz Challenge';
 var preGameMsg = 'Try to answer the following JavaScript coding related questions within the given time limit. Incorrect answers will deduct 10 seconds from the overall time.  Good Luck!!!'
 var startEl = document.querySelector('#start');
-var highScoreEl = document.querySelector('#hiScore');
+var hsBtnEl = document.querySelector('#hsBtn');
 var scoreEl = document.querySelector('#score');
 var timerEl = document.querySelector('#timer');
 var startHeaderEl = document.querySelector('#startheader');
@@ -18,21 +18,9 @@ var scoreBtnEl = document.querySelector('#scoreBtn');
 var goBackEl = document.querySelector('#goBack');
 var clearScoresEl = document.querySelector('#clearScores');
 var lastScoreEl = document.querySelector('#lastScore');
-
-var quizHiScore0 = document.querySelector('#quizOne');             //High Scores  queryselectorAll for visibility would not work. 
-var quizHiScore1 = document.querySelector('#quizTwo');
-var quizHiScore2 = document.querySelector('#quizThree');
-var quizHiScore3 = document.querySelector('#quizFour');
-var quizHiScore4 = document.querySelector('#quizFive');
-var quizHiScore5 = document.querySelector('#quizSix');
-var quizHiScore6 = document.querySelector('#quizSeven');
-
-var scoreRay = JSON.parse(localStorage.getItem('scoreRay')) || [];
-var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || [];
-
-
-var k;
-
+var listHi = document.querySelector('.listYes');
+var listChild = listHi.children;
+                                                             
 function unCover() {
     questionEl.style.visibility = 'visible';                    //Repeated code used to hide and unhide text
     answerOne.style.visibility = 'visible';                     
@@ -58,7 +46,7 @@ function sevenHide() {                                          //Below is a blo
     labelEl.style.visibility = 'hidden';
     initialsEl.style.visibility = 'hidden';
     goBackEl.style.visibility = 'hidden';
-    highScoreEl.style.visibility = 'hidden';
+    // highScoreEl.style.display = 'block';
     clearScoresEl.style.visibility = 'hidden';
     return;
 }
@@ -93,36 +81,14 @@ function threeSee() {
     return;
 }
 
-function highScoreOff() {
-    quizHiScore0.style.visibility = 'hidden';                          //The block turns the high visibility off
-    quizHiScore1.style.visibility = 'hidden';
-    quizHiScore2.style.visibility = 'hidden';
-    quizHiScore3.style.visibility = 'hidden';
-    quizHiScore4.style.visibility = 'hidden';
-    quizHiScore5.style.visibility = 'hidden';
-    quizHiScore6.style.visibility = 'hidden';
-    return;
-}
-
-function highScoreOn() {
-    quizHiScore0.style.visibility = 'visible';                                                      //The block turns the high visibility on
-    quizHiScore1.style.visibility = 'visible';
-    quizHiScore2.style.visibility = 'visible';
-    quizHiScore3.style.visibility = 'visible';
-    quizHiScore4.style.visibility = 'visible';
-    quizHiScore5.style.visibility = 'visible';
-    quizHiScore6.style.visibility = 'visible';
-    return;
-}
-
-                                                                                                    //Array for player initials and scores will check local storage for content to add to or make new array.
-var playTime = 76;                                                                               //Overall amount of time for the quiz. Global use in other functions.
+                                                                                    //Array for player initials and scores will check local storage for content to add to or make new array.
+var playTime = 76;                                                                      //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
-var transTime;                                                                                  //Time for questions to transition after click.  Global use in other functions.
-var j = 0;                                                                                      //Variables for genQuestion function.  Made Global to reference in other functions.
-var i;                                                                                           //j and i are used for the loop count to generate the questions.
+var transTime;                                                                          //Time for questions to transition after click.  Global use in other functions.
+var j = 0;                                                                               //Variables for genQuestion function.  Made Global to reference in other functions.
+var i;                                                                                   //j and i are used for the loop count to generate the questions.
 var currentQuestion = 0;
-var questAnsw = [                                                                               //Object/array for questions.  Index[5] contains the answer.
+var questAnsw = [                                                                        //Object/array for questions.  Index[5] contains the answer.
     {
         0: '1. Which method below is not associated with arrays?',
         1: 'a. sort()',
@@ -172,6 +138,8 @@ var questAnsw = [                                                               
 function preGame() {                                                                //Event listeners for the beginning of the quiz.
     sevenHide();       
     coverIT();
+    hsBtnEl.style.display ='none';
+    listHi.style.display = 'none';
     startHeaderEl.innerHTML = gameTitle;
     startmsgEl.innerHTML = preGameMsg;
     startEl.addEventListener('click', scrdisplay);                                  //This starts the quiz.
@@ -274,100 +242,70 @@ function additionEl(){                                                  //Keeps 
 
 function quizInitials() {
     fourSee();
-    correctEl.innerHTML = 'Your final score is ' + score;
-    labelEl.innerHTML = 'Enter your initials below then click Enter';
-    scoreBtnEl.addEventListener('click', saveScore);
+    
     if(playTime <= 0) {
         coverIT();
     }
+
+    correctEl.innerHTML = 'Your final score is ' + score;
+    labelEl.innerHTML = 'Enter your initials below then click Enter';
+    scoreBtnEl.addEventListener('click', saveScore);
+    
 }
 
 function saveScore() {
-    var userInfo = {
+    scoreBtnEl.style.visibility = 'hidden';
+     var userInfo = {
         userInitials: initialsEl.value.trim(),
-        quizScore: score 
+        quizScore: 0 
     }
-    
-    if(userInfo.userInitials === '' || userInfo.userInitials === null) {
-        labelEl.style.color = 'red';
-        labelEl.innerHTML = 'You must enter your initials';
-        return;
-    } 
-    lastScoreEl.innerHTML = 'Last Score: ' + userInfo.userInitials + ' ' + userInfo.quizScore;
+    userInfo.quizScore = score;
+
+    var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || '[]');
     scoreRay.push(userInfo);
-    currentScore.push(userInfo);
-    fourHide();
-    
-    localStorage.setItem('currentScore', JSON.stringify(currentScore));
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
-                                                                                            //Sorts values in the object array from highest to lowest.
-    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
-    console.log(currentScore);
-    for(k = 0; k > currentScore.length; k++) {
-        quizHiScore[k].innerText = currentScore[k].quizScore + currentScore[k].userInitials;
-        }
-  
-
-    // if(daScore.length == null) {
-    //     daScore[0].quizScore = 'No Score';                                                                                      //High Scores
-    //     quizOne0.innerHTML = '1. ' + daScore[0].quizScore + ' ' +  daScore[0].userInitials;
-    // }                                                            
-    // if(daScore.length == null) {
-    //     daScore[1].quizScore = 'No Score';                                                                                       //This block will list the top 7 high scores.
-        // quizTwo1.innerHTML = '2. ' + daScore[1].quizScore + ' ' +  daScore[1].userInitials;                                      //Tried to do a loop, but I would not work.
-    // }
-    // if(daScore.length == null) {
-    //     daScore[2].quizScore = 'No Score';
-    //     quizThree2.innerHTML = '3. ' + daScore[2].quizScore + ' ' + daScore[2].userInitials;
-    // }
-    // if(daScore.length == null) {
-    //     daScore[3].quizScore = 'No Score';
-    //     quizfour3.innerHTML = '4. ' + daScore[3].quizScore + ' ' + daScore[3].userInitials;
-    // }  
-    // if(daScore.length == null) {
-    //     daScore[4].quizScore = 'No Score';
-    //     quizfive4.innerHTML = '5. ' + daScore[4].quizScore + ' ' + daScore[4].userInitials;
-    // }
-    // if(daScore.length == null) {
-    //     daScore[5].quizScore = 'No Score';
-    //     quizsix5.innerHTML = '6. ' + daScore[5].quizScore + ' ' + daScore[5].userInitials;
-    // }
-    // if(daScore.length == null) {
-    //     daScore[6].quizScore = 'No Score';
-    //     quizseven6.innerHTML ='7. ' + daScore[6].quizScore + ' ' + daScore[6].userInitials;
-    // }
-
+    
+    lastScoreEl.innerHTML = 'Last Score: ' + userInfo.userInitials + ' ' + userInfo.quizScore;
+   
     goBackEl.style.visibility = 'visible';
-    highScoreEl.style.visibility = 'visible';
+    hsBtnEl.style.display = 'block';
     clearScoresEl.style.visibility = 'visible';     
-
-    highScoreOff();                                                                                 //blanks the high scores out, so the View High Score button must be used.
-    console.log('at the end of saveScore')
+    userInfo.userInitials = '';                                                         //blank out the input field for next iterations                                              //blanks the high scores out, so the View High Score button must be used.
+    
+          
     lastThing();   
  }
 
  function lastThing() {
     goBackEl.addEventListener('click', daRestart);
-    highScoreEl.addEventListener('click', function(event) {
-       highScoreOn();                                           //High scores will show when the High Score button is clicked.
-   });
-
+    
+    hsBtnEl.addEventListener('click', seeHighScore);                                      //High scores will show when the High Score button is clicked.
+   
     clearScoresEl.addEventListener('click', function(event) {
         localStorage.clear();
     });
 }
 
-function daRestart() {
-    highScoreOff();
+function seeHighScore(event) {
+    listHi.style.display = 'block';
+   var currentScore = JSON.parse(localStorage.getItem('scoreRay'));
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);                                                                              
+    for(k = 0; k < currentScore.length; k++) {
+        listHi.children[k].innerHTML = currentScore[k].quizScore + '___' + currentScore[k].userInitials;
+       } 
+}
+
+function daRestart(event) {
+    hsBtnEl.style.display = 'none';
+    listHi.style.display = 'none';
     goBackEl.style.visibility = 'hidden';
-    highScoreEl.style.visibility = 'hidden';
     clearScoresEl.style.visibility = 'hidden';
     threeSee();
     score = 0;
     currentQuestion = 0;
     j=0;
     playTime = 76;
-    initialsEl.value = '';                                      //blank out the input field for next iterations
+                                                               
     labelEl.style.color = 'black';
     fourHide();
     startEl.addEventListener('click', scrdisplay);              //This starts the quiz.
