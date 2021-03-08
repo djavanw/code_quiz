@@ -200,7 +200,7 @@ function checkAnswer(event) {
         event.target.innerText === questAnsw[1][4] || 
         event.target.innerText === questAnsw[2][1] || 
         event.target.innerText === questAnsw[3][2] || 
-        event.target.innerText === questAnsw[4][3]) {   
+        event.target.innerText === questAnsw[4][3] ){  
         score += 1 + Math.round(.131 * playTime);                                   //This will calcutate speed into the score.
         correctEl.style.color = 'blue';
         correctEl.innerHTML = 'Correct Answer';
@@ -257,11 +257,11 @@ function saveScore() {
     scoreBtnEl.style.visibility = 'hidden';
      var userInfo = {
         userInitials: initialsEl.value.trim(),
-        quizScore: 0 
+        quizScore: score 
     }
-    userInfo.quizScore = score;
+    // userInfo.quizScore = score;
 
-    var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || '[]');
+    var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || []);
     scoreRay.push(userInfo);
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
     
@@ -288,11 +288,15 @@ function saveScore() {
 
 function seeHighScore(event) {
     listHi.style.display = 'block';
-   var currentScore = JSON.parse(localStorage.getItem('scoreRay'));
-    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);                                                                              
-    for(let k = 0; k < currentScore.length; k++) {
-        listHi.children[k].textContent = currentScore[k].quizScore + '___' + currentScore[k].userInitials;
-       } 
+    var currentScore = JSON.parse(localStorage.getItem('scoreRay'));
+    currentScore.sort((a, b) => b.quizScore - a.quizScore);
+    
+    for(let k = 0; k < currentScore.length; k++){
+    var li = document.createElement('li');
+    li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
+    listHi.append(li);
+    currentScore.splice(7); 
+    }
 }
 
 function daRestart(event) {
