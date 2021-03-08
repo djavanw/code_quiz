@@ -261,7 +261,7 @@ function saveScore() {
     }
     // userInfo.quizScore = score;
 
-    var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || []);
+    var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || '[]');
     scoreRay.push(userInfo);
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
     
@@ -270,7 +270,7 @@ function saveScore() {
     goBackEl.style.visibility = 'visible';
     hsBtnEl.style.display = 'block';
     clearScoresEl.style.visibility = 'visible';     
-    userInfo.userInitials = '';                                                         //blank out the input field for next iterations                                              //blanks the high scores out, so the View High Score button must be used.
+    userInfo.userInitials = '';                                                         
     
           
     lastThing();   
@@ -288,14 +288,14 @@ function saveScore() {
 
 function seeHighScore(event) {
     listHi.style.display = 'block';
-    var currentScore = JSON.parse(localStorage.getItem('scoreRay'));
-    currentScore.sort((a, b) => b.quizScore - a.quizScore);
+    var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
     
-    for(let k = 0; k < currentScore.length; k++){
+    for(let k = 0; k < currentScore.length; k++){                                       //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
     listHi.append(li);
-    currentScore.splice(7); 
+    // currentScore.splice(7);                                                             //Will give only 7 scores on the screen
     }
 }
 
