@@ -290,8 +290,8 @@ function seeHighScore(event) {
     listHi.style.display = 'block';
    var currentScore = JSON.parse(localStorage.getItem('scoreRay'));
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);                                                                              
-    for(k = 0; k < currentScore.length; k++) {
-        listHi.children[k].innerHTML = currentScore[k].quizScore + '___' + currentScore[k].userInitials;
+    for(let k = 0; k < currentScore.length; k++) {
+        listHi.children[k].textContent = currentScore[k].quizScore + '___' + currentScore[k].userInitials;
        } 
 }
 
