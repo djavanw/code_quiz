@@ -270,16 +270,14 @@ function saveScore() {
     goBackEl.style.visibility = 'visible';
     hsBtnEl.style.display = 'block';
     clearScoresEl.style.visibility = 'visible';     
-    userInfo.userInitials = '';                                                         
-    
-          
+    userInfo.userInitials = '';      
     lastThing();   
  }
 
  function lastThing() {
     goBackEl.addEventListener('click', daRestart);
     
-    hsBtnEl.addEventListener('click', seeHighScore);                                      //High scores will show when the High Score button is clicked.
+    hsBtnEl.addEventListener('click', seeHighScore);                                                            //High scores will show when the High Score button is clicked.
    
     clearScoresEl.addEventListener('click', function(event) {
         localStorage.clear();
@@ -289,13 +287,12 @@ function saveScore() {
 function seeHighScore(event) {
     listHi.style.display = 'block';
     var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';
-    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
-    
-    for(let k = 0; k < 7; k++){                                       //revised loop with append
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore); 
+              
+    for(let k = 0; k < currentScore.length; k++){                                                         //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
     listHi.append(li);
-    // currentScore.splice(7);                                                             //Will give only 7 scores on the screen
     }
 }
 
@@ -309,7 +306,7 @@ function daRestart(event) {
     currentQuestion = 0;
     j=0;
     playTime = 76;
-                                                               
+                                                             
     labelEl.style.color = 'black';
     fourHide();
     startEl.addEventListener('click', scrdisplay);              //This starts the quiz.
