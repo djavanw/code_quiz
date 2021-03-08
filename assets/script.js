@@ -303,7 +303,7 @@ function saveScore() {
                                                                                             //Sorts values in the object array from highest to lowest.
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
     console.log(currentScore);
-    for(k = 0; k < currentScore.length; k++) {
+    for(k = 0; k > currentScore.length; k++) {
         quizHiScore[k].innerText = currentScore[k].quizScore + currentScore[k].userInitials;
         }
   
