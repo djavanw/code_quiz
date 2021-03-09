@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -152,5 +152,29 @@ h2 {
 
 li {
     background-color: lightskyblue;
+}
+
+
+/* Media Queries */
+
+@media screen and (max-width: 768px) {
+    * {
+        font-size: .7em;
+    }
+    .container, #question, #answ1, #answ2,
+    #answ3, #answ4  ,#answ5, #label, 
+    #correct, initials {
+        font-size: 20px;
+    }
+
+    #startheader {
+        font-size: 24px;
+    }
+
+    #startmsg {
+        font-size: 20px;
+    }
+
+
 }
 

@@ -286,13 +286,12 @@ function saveScore() {
 function seeHighScore(event) {
     hsBtnEl.style.display = 'none';
     listHi.style.display = 'block';
-    var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';
+    var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';                                    //Pull by local storage name
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore); 
     for(let k = 0; k < currentScore.length; k++){                                                               //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
     listHi.append(li);
-
     }
 }
 
@@ -309,6 +308,7 @@ function daRestart(event) {
                                                             
     labelEl.style.color = 'black';
     fourHide();
+
     startEl.addEventListener('click', scrdisplay);              //This starts the quiz.
     startEl.addEventListener('click', timerGame);               //This starts the quiz timer.
    
