@@ -1,5 +1,6 @@
 var gameTitle = 'Coding Quiz Challenge';
 var preGameMsg = 'Try to answer the following JavaScript coding related questions within the given time limit. Incorrect answers will deduct 10 seconds from the overall time.  Good Luck!!!'
+var clearHighScoreMessage = 'Now, refresh your browser to fully clear list. Before next game.';
 var startEl = document.querySelector('#start');
 var hsBtnEl = document.querySelector('#hsBtn');
 var scoreEl = document.querySelector('#score');
@@ -19,7 +20,6 @@ var goBackEl = document.querySelector('#goBack');
 var clearScoresEl = document.querySelector('#clearScores');
 var lastScoreEl = document.querySelector('#lastScore');
 var listHi = document.querySelector('.listYes');
-var listChild = listHi.children;
                                                              
 function unCover() {
     questionEl.style.visibility = 'visible';                    //Repeated code used to hide and unhide text
@@ -80,8 +80,7 @@ function threeSee() {
     startmsgEl.style.visibility = 'visible';
     return;
 }
-
-                                                                                    //Array for player initials and scores will check local storage for content to add to or make new array.
+                                                                                        //Array for player initials and scores will check local storage for content to add to or make new array.
 var playTime = 76;                                                                      //Overall amount of time for the quiz. Global use in other functions.
 var score = 0;
 var transTime;                                                                          //Time for questions to transition after click.  Global use in other functions.
@@ -169,7 +168,7 @@ function timerGame(event) {                                                     
     }, 1000);
 }
 
-function genQuestion() {
+function genQuestion() {                                                            //The block of code generates/loops through the questions
     currentQuestion++;
     for(i = 0; i < questAnsw.length; i++)  {
         if(i === 0) {
@@ -214,7 +213,7 @@ function checkAnswer(event) {
     transitionEl();
 }
 
-function transitionEl(event) {                                      //Transition time between questions being answered.
+function transitionEl(event) {                                                  //Transition time between questions being answered.
     transTime = 2;
     var transInterval = setInterval(function(){
         transTime--;
@@ -242,7 +241,6 @@ function additionEl(){                                                  //Keeps 
 
 function quizInitials() {
     fourSee();
-    
     if(playTime <= 0) {
         coverIT();
     }
@@ -250,17 +248,15 @@ function quizInitials() {
     correctEl.innerHTML = 'Your final score is ' + score;
     labelEl.innerHTML = 'Enter your initials below then click Enter';
     scoreBtnEl.addEventListener('click', saveScore);
-    
 }
 
 function saveScore() {
     scoreBtnEl.style.visibility = 'hidden';
-     var userInfo = {
+    var userInfo = {
         userInitials: initialsEl.value.trim(),
         quizScore: score 
     }
-    // userInfo.quizScore = score;
-
+  
     var scoreRay = JSON.parse(localStorage.getItem('scoreRay') || '[]');
     scoreRay.push(userInfo);
     localStorage.setItem('scoreRay', JSON.stringify(scoreRay));
@@ -281,18 +277,22 @@ function saveScore() {
    
     clearScoresEl.addEventListener('click', function(event) {
         localStorage.clear();
+        labelEl.style.color = 'red';
+        labelEl.innerText = clearHighScoreMessage;
+
     });
 }
 
 function seeHighScore(event) {
+    hsBtnEl.style.display = 'none';
     listHi.style.display = 'block';
     var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';
     currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore); 
-              
-    for(let k = 0; k < currentScore.length; k++){                                                         //revised loop with append
+    for(let k = 0; k < currentScore.length; k++){                                                               //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
     listHi.append(li);
+
     }
 }
 
@@ -306,7 +306,7 @@ function daRestart(event) {
     currentQuestion = 0;
     j=0;
     playTime = 76;
-                                                             
+                                                            
     labelEl.style.color = 'black';
     fourHide();
     startEl.addEventListener('click', scrdisplay);              //This starts the quiz.

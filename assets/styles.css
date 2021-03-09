@@ -95,6 +95,8 @@
     font-size: 20px;
     height: 30px;
     width: 100%;
+    text-align: center;
+    color: blue;
     
 }
 
@@ -118,7 +120,7 @@
 
 #hsBtn {
     grid-column: 4;
-    grid-row: 10;
+    grid-row: 9;
     cursor: pointer;
 }
 
