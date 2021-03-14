@@ -283,16 +283,18 @@ function saveScore() {
     });
 }
 
-function seeHighScore(event) {
+function seeHighScore() {
     hsBtnEl.style.display = 'none';
     listHi.style.display = 'block';
     var currentScore = JSON.parse(localStorage.getItem('scoreRay')) || '[]';                                    //Pull by local storage name
-    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore); 
-    for(let k = 0; k < currentScore.length; k++){                                                               //revised loop with append
+    currentScore.sort((value1, value2) => value2.quizScore - value1.quizScore);
+    listHi.textContent = "";
+    for(let k = 0; k < 7; k++){                                                                                 //revised loop with append
     var li = document.createElement('li');
     li.textContent = currentScore[k].quizScore + '___ ' + currentScore[k].userInitials;
-    listHi.append(li);
-    }
+    listHi.append(li)   
+}
+   
 }
 
 function daRestart(event) {
